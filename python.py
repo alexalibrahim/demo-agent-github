@@ -6,6 +6,8 @@ Bugs - Contains various bug patterns that Sonar detects
 # Mutable default argument
 def append_to_list(item, lst=[]):
     """Mutable default argument bug"""
+    if lst is None:
+        lst = []
     lst.append(item)
     return lst
 
