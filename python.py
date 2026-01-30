@@ -49,7 +49,7 @@ def no_exception_handling(filename):
 def bare_except():
     """Using bare except clause"""
     try:
-        result = 10 / 0
+        10 / 0
     except:
         pass
 
