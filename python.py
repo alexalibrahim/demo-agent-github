@@ -5,6 +5,8 @@ Bugs - Contains various bug patterns that Sonar detects
 
 # Mutable default argument
 def append_to_list(item, lst=[]):
+    if lst is None:
+        lst = []
     """Mutable default argument bug"""
     lst.append(item)
     return lst
@@ -30,6 +32,8 @@ def unused_variables():
     """Contains unused variables"""
     x = 10
     y = 20
+    z = 30
+    unused_var = 40
     another_unused = 50
     return x + y
 
