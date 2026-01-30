@@ -30,7 +30,6 @@ def unused_variables():
     """Contains unused variables"""
     x = 10
     y = 20
-    z = 30
     unused_var = 40
     another_unused = 50
     return x + y
