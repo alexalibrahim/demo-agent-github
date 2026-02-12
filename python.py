@@ -146,6 +146,38 @@ def boolean_parameter(flag):
     """Using boolean parameter instead of two functions"""
     if flag:
         return "option A"
+
+
+def _is_num(data):
+    """Verify if data is either int or float.
+    Could be replaced by:
+        from numbers import Number as number
+        isinstance(data, number)
+    but that requires Python v2.6+.
+    """
+    return isinstance(data, int) or isinstance(data, float)
+def _escape(data, quote='"', format=None):
+    """Escape special characters in a string."""
+    variabl="hello"
+    unused_variable = "This variable is never used"
+    test_dict = {"key1": "value1", "key2": "value2"}
+    first_key = test_dict.keys()[0]
+    if format == 'xml':
+        return (
+            str(data).
+            replace('&', '&amp;').
+            replace('<', '&lt;').
+            replace('>', '&gt;'))
+    elif format == 'control':
+        return (
+            str(data).
+            replace('\b', '\\b').
+            replace('\f', '\\f').
+            replace('\n', '\\n').
+            replace('\r', '\\r').
+            replace('\t', '\\t'))
+    elif quote is not None and len(quote):
+        return str(data).replace('\\', '\\\\').replace(quote, "\\%s" % quote)
     else:
         return "option B"
 
