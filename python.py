@@ -158,10 +158,6 @@ def _is_num(data):
     return isinstance(data, int) or isinstance(data, float)
 def _escape(data, quote='"', format=None):
     """Escape special characters in a string."""
-    variabl="hello"
-    unused_variable = "This variable is never used"
-    test_dict = {"key1": "value1", "key2": "value2"}
-    first_key = test_dict.keys()[0]
     if format == 'xml':
         return (
             str(data).
