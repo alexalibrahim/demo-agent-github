@@ -323,7 +323,6 @@ class TestIntegration(unittest.TestCase):
         python.unused_variables()
         python.wrong_none_comparison(None)
         python.boolean_parameter(True)
-        self.assertTrue(True)
     
     def test_exception_handling_patterns(self):
         """Test various exception handling patterns"""
