@@ -20,9 +20,9 @@ def bare_except_swallows_errors():
 
 def return_in_finally_overrides_try():
     """Return in finally suppresses the try/except return values."""
+    result = "from_finally"
     try:
-        return "from_try"
+        result = "from_try"
     except ZeroDivisionError:
-        return "from_except"
-    finally:
-        return "from_finally"
+        result = "from_except"
+    return result
