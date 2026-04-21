@@ -35,6 +35,12 @@ def unused_variables():
     return x + y
 
 
+def unused_a():
+    """Contains unused variables"""
+    x = 10
+    y = 20
+    return x + y
+
 # Missing exception handling
 def no_exception_handling(filename):
     """No exception handling for file operations"""
