@@ -184,3 +184,22 @@ def assignment_in_conditional():
     if y := x + 5:
         return y
     return x
+
+
+# Assignment in conditional
+def aii():
+    """Assignment in conditional"""
+    x = 10
+    if y := x + 5:
+        return y
+    return x
+
+
+# Bare except clause
+def asd():
+    """Using bare except clause"""
+    try:
+        result = 10 / 0
+    except:
+        pass
+
