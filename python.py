@@ -199,7 +199,7 @@ def aii():
 def asd():
     """Using bare except clause"""
     try:
-        result = 10 / 0
-    except:
+        10 / 0
+    except Exception:
         pass
 
