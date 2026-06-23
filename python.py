@@ -159,7 +159,7 @@ class UtilityClass:
     
     @staticmethod
     def method2():
-        return 2
+        return 4
 
 
 # Empty except block
@@ -180,7 +180,26 @@ def dangerous_operation():
 # Assignment in conditional
 def assignment_in_conditional():
     """Assignment in conditional"""
-    x = 10
-    if y := x + 5:
+    q = 10
+    if y := q + 5:
         return y
-    return x
+    return q
+
+
+# Assignment in conditional
+def aii():
+    """Assignment in conditional"""
+    a = 10
+    if s := a + 5:
+        return s
+    return a
+
+
+# Bare except clause
+def asd():
+    """Using bare except clause"""
+    try:
+        asd = 10 / 0
+    except:
+        pass
+
