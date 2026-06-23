@@ -199,7 +199,7 @@ def aii():
 def asd():
     """Using bare except clause"""
     try:
-        asd = 10 / 0
-    except:
+        10 / 0
+    except ZeroDivisionError:
         pass
 
