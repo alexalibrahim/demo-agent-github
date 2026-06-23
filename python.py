@@ -189,10 +189,10 @@ def assignment_in_conditional():
 # Assignment in conditional
 def aii():
     """Assignment in conditional"""
-    x = 10
-    if y := x + 5:
+    a = 10
+    if y := a + 5:
         return y
-    return x
+    return a
 
 
 # Bare except clause
