@@ -184,3 +184,12 @@ def assignment_in_conditional():
     if y := x + 5:
         return y
     return x
+
+# Assignment in conditional
+def alex():
+    """Assignment in conditional"""
+    x = 10
+    if y := x + 5:
+        return y
+    return x
+
