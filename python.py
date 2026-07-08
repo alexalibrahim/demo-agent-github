@@ -64,7 +64,7 @@ def ignoring_return_value():
 # Comparing to None with ==
 def wrong_none_comparison(value):
     """Wrong way to compare to None"""
-    if value == None:
+    if value is None:
         return True
     return False
 
