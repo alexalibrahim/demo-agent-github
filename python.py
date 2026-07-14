@@ -16,9 +16,6 @@ def append_to_list(item, lst=None):
 def unreachable_code():
     """Contains unreachable code"""
     return "early return"
-    print("This will never execute")
-    x = 5
-    return x
 
 
 # Division by zero risk
@@ -48,8 +45,8 @@ def no_exception_handling(filename):
 def bare_except():
     """Using bare except clause"""
     try:
-        result = 10 / 0
-    except:
+        10 / 0
+    except ZeroDivisionError:
         pass
 
 
@@ -134,10 +131,8 @@ def return_in_finally():
     """Return in finally block"""
     try:
         return "try"
-    except:
+    except Exception:
         return "except"
-    finally:
-        return "finally"
 
 
 # Boolean parameter
@@ -178,9 +173,8 @@ def dangerous_operation():
 
 
 # Assignment in conditional
-def assignment_in_conditional():
+def assignment_in_conditional(x):
     """Assignment in conditional"""
-    x = 10
-    if y := x + 5:
+    if (y := x + 5) > 10:
         return y
     return x
