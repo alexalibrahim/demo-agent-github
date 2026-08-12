@@ -184,3 +184,39 @@ def assignment_in_conditional():
     if y := x + 5:
         return y
     return x
+
+
+# ── Issues below: some blocked rules, some unblocked ─────────────────────────
+
+# BLOCKED: python:S1135 — TODO comment (agent must not touch this)
+# TODO: refactor this to use a dataclass
+def legacy_config():
+    return {"host": "localhost", "port": 8080}
+
+
+# BLOCKED: python:S1134 — FIXME comment (agent must not touch this)
+# FIXME: this throws when the dict is empty
+def first_value(d):
+    return list(d.values())[0]
+
+
+# UNBLOCKED: python:S8521 — unnecessary .keys() call (agent CAN fix)
+def has_key(d, key):
+    return key in d.keys()
+
+
+# UNBLOCKED: python:S8521 — unnecessary .keys() call (agent CAN fix)
+def count_matching(d, targets):
+    return sum(1 for t in targets if t in d.keys())
+
+
+# UNBLOCKED: python:S1481 — unused local variable (agent CAN fix)
+def calculate_discount(price, rate):
+    tax = price * 0.2   # unused
+    discount = price * rate
+    return price - discount
+
+
+# UNBLOCKED: python:S1763 — all branches of ternary are identical (agent CAN fix)
+def redundant_ternary(x):
+    return True if x > 0 else True
