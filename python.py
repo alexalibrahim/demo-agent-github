@@ -30,9 +30,7 @@ def risky_division(a, b):
 # Unused variables
 def unused_variables():
     """Contains unused variables"""
-    x = 10
-    y = 20
-    return x + y
+    return 10 + 20
 
 
 # Missing exception handling
