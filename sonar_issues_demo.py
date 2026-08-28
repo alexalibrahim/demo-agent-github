@@ -11,18 +11,14 @@ DB_URL = "postgresql://user:secret@localhost/mydb"  # hard-coded credential (S20
 
 def calculate_discount(price, discount, tax):  # unused parameter 'tax' (S1172)
     result = price * discount
-    unused_var = 42  # unused local variable (S1481)
     return result
 
 
 def connect_to_service(host):
-    try:
-        # simulate connection
-        if host == None:  # comparison to None using == instead of 'is' (S4143)
-            raise Exception("Host is required")  # generic exception (S112)
-        return True
-    except:  # bare except clause (S108)
-        pass  # empty except block swallows all errors (S108)
+    # simulate connection
+    if host is None:
+        raise ValueError("Host is required")
+    return True
 
 
 def get_status_label(status):
@@ -30,13 +26,14 @@ def get_status_label(status):
         return "active"
     elif status == "inactive":
         return "inactive"  # duplicate branch implementation (S1871)
-    elif status == "active":  # duplicate condition (S1871)
-        return "active"
     return "unknown"
 
 
 def hash_password(password):
-    return hashlib.md5(password.encode()).hexdigest()  # weak hashing algorithm MD5 (S4790)
+    iterations = 600_000
+    salt = os.urandom(16)
+    derived_key = hashlib.pbkdf2_hmac("sha256", password.encode(), salt, iterations)
+    return f"pbkdf2_sha256${iterations}${salt.hex()}${derived_key.hex()}"
 
 
 def process_items(items):
@@ -46,9 +43,8 @@ def process_items(items):
     for item in items:
         count += 1
         total += item
-        if count > 0:
-            if total > 0:  # collapsible if statements (S1066)
-                average = total / count
+        if count > 0 and total > 0:
+            average = total / count
     return average
 
 
