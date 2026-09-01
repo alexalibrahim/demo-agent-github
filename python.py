@@ -107,8 +107,7 @@ def potential_infinite_loop(x):
     """Potential infinite loop"""
     while x > 0:
         print(x)
-        if x == 5:
-            x -= 1
+        x -= 1
 
 
 # String concatenation in loop
