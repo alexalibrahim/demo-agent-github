@@ -1,0 +1,263 @@
+# SonarQube YAML Issues Demo File
+# This file intentionally contains many patterns that SonarQube flags.
+
+# ─────────────────────────────────────────────────────────────
+# 1. HARDCODED CREDENTIALS / SECRETS  (sonar: yaml:S6437, S6290, etc.)
+# ─────────────────────────────────────────────────────────────
+database:
+  host: db.internal
+  port: 5432
+  username: admin
+  password: "SuperSecret123!"          # Hardcoded password
+  connection_string: "postgresql://admin:P@ssw0rd@db.internal:5432/prod"
+
+aws:
+  access_key_id: "AKIAIOSFODNN7EXAMPLE"          # Hardcoded AWS access key
+  secret_access_key: "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"  # Hardcoded AWS secret
+  region: us-east-1
+
+github:
+  token: "ghp_abcdefghijklmnopqrstuvwxyz012345"  # Hardcoded GitHub token
+
+api:
+  key: "sk-proj-ABCDEFGHIJKLMNOPQRSTUVWXYZ"      # Hardcoded API key
+  secret: "my-very-secret-api-secret-value"
+
+jwt:
+  secret: "jwt-secret-do-not-share"              # Hardcoded JWT secret
+
+smtp:
+  password: "emailpassword123"                   # Hardcoded SMTP password
+
+# ─────────────────────────────────────────────────────────────
+# 2. DUPLICATE KEYS  (sonar: yaml:S1192 / duplicate-key rule)
+# ─────────────────────────────────────────────────────────────
+service:
+  name: my-service
+  port: 8080
+  port: 9090            # Duplicate key — later value silently wins
+  name: other-service   # Duplicate key
+
+settings:
+  timeout: 30
+  timeout: 60           # Duplicate key
+
+# ─────────────────────────────────────────────────────────────
+# 3. OVERLY PERMISSIVE FILE / CONTAINER PERMISSIONS
+# ─────────────────────────────────────────────────────────────
+
+# Docker-Compose: privileged container (sonar: docker:S6304)
+version: "3.9"
+services:
+  web:
+    image: nginx:latest
+    privileged: true               # Never run containers as privileged
+    user: "0"                      # Running as root (sonar: docker:S6471)
+    ports:
+      - "0.0.0.0:80:80"            # Binding to all interfaces
+
+  sidecar:
+    image: busybox
+    cap_add:                       # Dangerous capabilities (sonar: docker:S6304)
+      - SYS_ADMIN
+      - NET_ADMIN
+      - ALL
+    security_opt:
+      - no-new-privileges:false    # Allows privilege escalation
+    read_only: false               # Writable root filesystem
+
+# ─────────────────────────────────────────────────────────────
+# 4. KUBERNETES: MISSING SECURITY CONTEXTS / RESOURCE LIMITS
+# ─────────────────────────────────────────────────────────────
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: insecure-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: insecure-app
+  template:
+    metadata:
+      labels:
+        app: insecure-app
+    spec:
+      # No securityContext at pod level (sonar: kubernetes:S6864)
+      hostNetwork: true            # Using host network namespace (sonar: kubernetes:S6421)
+      hostPID: true                # Sharing host PID namespace (sonar: kubernetes:S6471)
+      hostIPC: true                # Sharing host IPC namespace
+      automountServiceAccountToken: true  # Unnecessary token mount
+      containers:
+        - name: app
+          image: myapp:latest      # No image digest — mutable tag (sonar: kubernetes:S6596)
+          # No securityContext on container (sonar: kubernetes:S6596)
+          securityContext:
+            privileged: true       # Container running as privileged (sonar: kubernetes:S6293)
+            allowPrivilegeEscalation: true   # (sonar: kubernetes:S6535)
+            runAsNonRoot: false    # Running as root
+            runAsUser: 0           # UID 0 = root
+            readOnlyRootFilesystem: false
+            capabilities:
+              add:
+                - SYS_ADMIN
+                - NET_ADMIN
+          # No resource requests/limits (sonar: kubernetes:S6598)
+          env:
+            - name: DB_PASSWORD
+              value: "hardcoded-db-password"    # Hardcoded secret in env var
+            - name: SECRET_KEY
+              value: "another-secret-in-plain"
+
+---
+# ─────────────────────────────────────────────────────────────
+# 5. GITHUB ACTIONS: SECURITY ISSUES
+# ─────────────────────────────────────────────────────────────
+name: Insecure Workflow
+
+on:
+  pull_request_target:             # Dangerous trigger with untrusted code (sonar: actions:S6786)
+    types: [opened]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write              # Over-broad permission (sonar: actions:S6896)
+      actions: write
+      id-token: write
+      pull-requests: write
+      packages: write
+      deployments: write
+      security-events: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true  # Credentials in workspace (sonar: actions:S6920)
+
+      - name: Use unversioned action   # No commit SHA pinning (sonar: actions:S6849)
+        uses: some-org/some-action@main   # Mutable ref — can be hijacked
+
+      - name: Inject PR title into shell  # Script injection (sonar: actions:S6957)
+        run: |
+          echo "PR title: ${{ github.event.pull_request.title }}"
+          echo "Author: ${{ github.event.pull_request.user.login }}"
+
+      - name: Inline secret exposure
+        run: |
+          curl -H "Authorization: Bearer hardcoded-token-abc123" https://api.example.com
+          export AWS_SECRET_ACCESS_KEY="wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+
+      - name: Write secret to log       # Secret printed to logs
+        run: echo "My password is SuperSecret123!"
+
+# ─────────────────────────────────────────────────────────────
+# 6. CLOUDFORMATION: INSECURE RESOURCE CONFIGURATION
+# ─────────────────────────────────────────────────────────────
+AWSTemplateFormatVersion: "2010-09-09"
+Resources:
+  InsecureBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: my-public-bucket
+      AccessControl: PublicRead      # Public S3 bucket (sonar: cloudformation:S6249)
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false       # Not blocking public ACLs
+        BlockPublicPolicy: false
+        IgnorePublicAcls: false
+        RestrictPublicBuckets: false
+
+  UnencryptedDB:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBInstanceClass: db.t3.micro
+      Engine: mysql
+      MasterUsername: admin
+      MasterUserPassword: "PlaintextPassword123"  # Hardcoded password in CFN (sonar: cloudformation:S6437)
+      StorageEncrypted: false        # No encryption at rest (sonar: cloudformation:S6303)
+      DeletionProtection: false
+      BackupRetentionPeriod: 0       # No backups
+
+  OpenSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Wide-open SG
+      SecurityGroupIngress:
+        - IpProtocol: "-1"           # All traffic allowed in
+          CidrIp: "0.0.0.0/0"        # From anywhere (sonar: cloudformation:S6321)
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: "0.0.0.0/0"        # SSH open to the world (sonar: cloudformation:S6321)
+
+  UnencryptedQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: unencrypted-queue
+      # KmsMasterKeyId absent — no encryption (sonar: cloudformation:S6330)
+
+# ─────────────────────────────────────────────────────────────
+# 7. ANSIBLE: COMMAND-INJECTION / INSECURE TASKS
+# ─────────────────────────────────────────────────────────────
+- hosts: all
+  become: yes                        # Running as root (sonar: ansible:S6346)
+  tasks:
+    - name: Run arbitrary shell command
+      shell: "curl http://example.com/install.sh | bash"  # Pipe to bash (sonar: ansible:S4721)
+
+    - name: Download and execute without verification
+      get_url:
+        url: http://example.com/binary   # HTTP, not HTTPS (sonar: ansible:S5332)
+        dest: /usr/local/bin/tool
+        mode: "0777"                 # World-writable executable (sonar: ansible:S2612)
+
+    - name: Hardcoded credential in task
+      uri:
+        url: https://api.example.com/data
+        headers:
+          Authorization: "Basic YWRtaW46cGFzc3dvcmQ="   # base64(admin:password)
+
+    - name: Ignore SSH host key checking
+      command: ssh -o StrictHostKeyChecking=no user@host  # MITM risk
+
+# ─────────────────────────────────────────────────────────────
+# 8. MISCELLANEOUS YAML QUALITY ISSUES
+# ─────────────────────────────────────────────────────────────
+
+# Empty / null values where a real value is expected
+config:
+  feature_flag:                    # Implicit null value
+  log_level: ""                    # Empty string
+  retry_count: ~                   # Explicit null
+
+# Deeply nested structure (readability issue)
+level1:
+  level2:
+    level3:
+      level4:
+        level5:
+          level6:
+            level7:
+              level8:
+                value: too-deep
+
+# Boolean ambiguity — YAML 1.1 legacy strings parsed as booleans
+legacy_booleans:
+  flag_yes: yes       # Parsed as true in YAML 1.1 — ambiguous
+  flag_no: no
+  flag_on: on
+  flag_off: off
+
+# Octal integer ambiguity (YAML 1.1 vs 1.2)
+permissions:
+  file_mode: 0777     # Interpreted as octal 511 in YAML 1.1, decimal 777 in 1.2
+
+# Merge key used (YAML 1.1 feature, dropped in 1.2 — sonar: yaml:S6473)
+defaults: &defaults
+  timeout: 30
+  retries: 3
+
+production:
+  <<: *defaults       # Merge key — deprecated and ambiguous across parsers
+  timeout: 60
