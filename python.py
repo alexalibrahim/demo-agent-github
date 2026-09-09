@@ -137,7 +137,7 @@ def return_in_finally():
     except:
         return "except"
     finally:
-        return "finally"
+        pass
 
 
 # Boolean parameter
