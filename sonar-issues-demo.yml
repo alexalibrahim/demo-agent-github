@@ -8,8 +8,8 @@ database:
   host: db.internal
   port: 5432
   username: admin
-  password: "SuperSecret123!"          # Hardcoded password
-  connection_string: "postgresql://admin:P@ssw0rd@db.internal:5432/prod"
+  password: ${DB_PASSWORD}          # Injected from the environment / secrets manager; never commit a literal
+  connection_string: "postgresql://admin:${DB_PASSWORD}@db.internal:5432/prod"
 
 aws:
   access_key_id: "AKIAIOSFODNN7EXAMPLE"          # Hardcoded AWS access key
