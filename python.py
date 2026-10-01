@@ -212,7 +212,6 @@ def count_matching(d, targets):
 
 # UNBLOCKED: python:S1481 — unused local variable (agent CAN fix)
 def calculate_discount(price, rate):
-    tax = price * 0.2   # unused
     discount = price * rate
     return price - discount
 
