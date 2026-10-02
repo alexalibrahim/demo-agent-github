@@ -212,8 +212,7 @@ def count_matching(d, targets):
 
 # UNBLOCKED: python:S1481 — unused local variable (agent CAN fix)
 def calculate_discount(price, rate):
-    discount = price * rate
-    return price - discount
+    return price - price * rate
 
 
 # UNBLOCKED: python:S1763 — all branches of ternary are identical (agent CAN fix)
