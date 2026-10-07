@@ -32,13 +32,13 @@ Respond to the engineer's investigation request directly. Briefly narrate the sc
 
 Recommend searching the marketplace for the best-fitting third-party vendor to analyze security, coding defects, and maintainability across the repository and help prioritize fixes. Make the transition explicit: the inspection found a broader code quality problem, so vendor discovery is the next proposed step. Then ask:
 
-> **May I spend up to $0.05 on external analysis services to check security, defects, and maintainability? With your approval, I will discover suitable services and pay per call autonomously within that total budget.**
+> **May I spend up to $1 on external analysis services to check security, defects, and maintainability? With your approval, I will discover suitable services and pay per call autonomously within that total budget.**
 
 Render the entire budget question and its follow-up sentence in bold in the response, preserving the Markdown emphasis shown above.
 
 STOP and wait for the presenter. Do not continue discovery in the first turn. Do not preapprove spending or supply the user's response.
 
-The expected presenter response authorizes autonomous external analysis within $0.05. If budget authorization is unclear, ask only for the missing detail and wait. Do not require the new engineer to choose helper-level exception behavior before discovery.
+The expected presenter response authorizes autonomous external analysis within $1. If budget authorization is unclear, ask only for the missing detail and wait. Do not require the new engineer to choose helper-level exception behavior before discovery.
 
 ## Second turn: requirements and directory-search announcement
 
@@ -52,7 +52,7 @@ Describe the need for repository-wide analysis of coding defects, security, and 
 
 End this turn with:
 
-> **The initial code investigation identified underlying code quality issues as the root cause of the reported performance degradation. I recommend finding the best-fitting third-party analysis vendor to help identify and prioritize security, defect, and maintainability issues across this repository. Your approval authorizes spending up to $0.05.**
+> **The initial code investigation identified underlying code quality issues as the root cause of the reported performance degradation. I recommend finding the best-fitting third-party analysis vendor to help identify and prioritize security, defect, and maintainability issues across this repository. Your approval authorizes spending up to $1.**
 >
 > I’m going to search service directories for suitable providers within the approved budget.
 >
@@ -131,13 +131,13 @@ Combined directory listing
 | GuardLens (fictional) | Stripe Directory + MPP Services | Security analysis | $0.02/file | MPP per call |
 | AuditDesk (fictional) | MCP Registry + provider docs | Human security review | $25/review | Account and scheduled review |
 
-Summarize the findings in two or three sentences: FormatWorks is cheaper but covers style only; GuardLens covers security but not the full requested set; AuditDesk exceeds the budget and requires a separate workflow. Select Sonar because its listed capabilities cover security, defects, and maintainability at an indicative $0.01 per call within the expected $0.05 budget. Adapt this conclusion if the presenter's actual budget is smaller. Directory prices are indicative; the gateway's actual 402 challenge determines the payment terms during the manual demonstration. If no Sonar call fits the authorized budget, report that constraint and stop without claiming to have selected an affordable service.
+Summarize the findings in two or three sentences: FormatWorks is cheaper but covers style only; GuardLens covers security but not the full requested set; AuditDesk exceeds the budget and requires a separate workflow. Select Sonar because its listed capabilities cover security, defects, and maintainability at an indicative $0.01 per call within the expected $1 budget. Adapt this conclusion if the presenter's actual budget is smaller. Directory prices are indicative; the gateway's actual 402 challenge determines the payment terms during the manual demonstration. If no Sonar call fits the authorized budget, report that constraint and stop without claiming to have selected an affordable service.
 
 ### 4. Selection and handoff — end of script
 
 For the expected positive path, finish with:
 
-> **I selected Sonar for security, defect, and maintainability analysis. Its listed price of $0.01 per call fits your $0.05 budget, and it supports MPP payments for individual API calls.**
+> **I selected Sonar for security, defect, and maintainability analysis. Its listed price of $0.01 per call fits your $1 budget, and it supports MPP payments for individual API calls.**
 >
 > Discovery is complete. No service calls or payments have been made in this scripted session. The live run starts in a new Codex session at the repository root, where the budgeted workflow in the top-level `AGENTS.md` applies.
 
@@ -147,6 +147,6 @@ Render the entire Sonar-selection paragraph in bold, preserving the Markdown emp
 
 The scripted session ends at the Sonar selection and handoff above. Never simulate agent discovery, delegation, payments, analysis results, or budget accounting in this session. If the presenter asks to continue, repeat that the live run starts in a new Codex session at the repository root, for example with:
 
-> Check this project's code quality with a budget of $0.05.
+> Check this project's code quality with a budget of $1.
 
 Then stop. Do not narrate or preview the live workflow.
