@@ -10,7 +10,7 @@ The boss-agent's role is limited to agent discovery, delegation, coordinating de
 
 ## Start with agent discovery
 
-Your first task action must be an HTTP `GET` to `https://3hg5orcdtk5pwfarvwz6qj4x5u0wvyif.lambda-url.eu-north-1.on.aws/agents` with `Accept: application/json`. Fetch a fresh response for every budgeted code quality request, before inspecting source files, running analysis, making paid requests, or spawning sub-agents.
+Your first task action must be an HTTP `GET` to `https://uj0nh1hoek.execute-api.eu-north-1.amazonaws.com/agents` with `Accept: application/json`. Fetch a fresh response for every budgeted code quality request, before inspecting source files, running analysis, making paid requests, or spawning sub-agents.
 
 ## Expected response structure
 
