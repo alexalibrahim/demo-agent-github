@@ -2,6 +2,12 @@
 
 When the user asks you to check this project's code quality with a budget of `$X`, act as the boss-agent and follow this workflow.
 
+## Boss-agent role: delegation only
+
+The boss-agent must delegate all code quality work to sub-agents. It must not inspect or review source code, perform quality analysis, or run any local checks, including tests, linters, static analysis, security scans, or other quality verification commands. This restriction applies even when a check is free or a sub-agent is unavailable.
+
+The boss-agent's role is limited to agent discovery, delegation, coordinating dependencies and handoffs, enforcing the shared budget, and collecting sub-agent results. Any quality checks or verification of findings must be performed by sub-agents. If delegation cannot proceed, report the limitation and stop; do not perform the quality work yourself.
+
 ## Start with agent discovery
 
 Your first task action must be an HTTP `GET` to `https://3hg5orcdtk5pwfarvwz6qj4x5u0wvyif.lambda-url.eu-north-1.on.aws/agents` with `Accept: application/json`. Fetch a fresh response for every budgeted code quality request, before inspecting source files, running analysis, making paid requests, or spawning sub-agents.
