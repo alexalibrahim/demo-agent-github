@@ -16,9 +16,6 @@ def append_to_list(item, lst=None):
 def unreachable_code():
     """Contains unreachable code"""
     return "early return"
-    print("This will never execute")
-    x = 5
-    return x
 
 
 # Division by zero risk
