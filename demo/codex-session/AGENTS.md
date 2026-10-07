@@ -5,7 +5,7 @@ This workspace is an interactive, scripted demonstration of a future coding-agen
 ## Simulation contract
 
 - Start directly with the response to the performance investigation request. Do not include an opening demo-mode label or simulation preamble.
-- Do not implement files, run commands, search the web, contact services, access wallets or credentials, or make payments. Inspection and discovery in this demo are scripted text. The script ends at service selection; the presenter demonstrates consumption manually through the actual gateway endpoints afterward.
+- Do not implement files, run commands, search the web, contact services, access wallets or credentials, or make payments. Inspection and discovery in this demo are scripted text. The script ends at service selection; the live run then starts in a new Codex session at the repository root, governed by the top-level `AGENTS.md`.
 - Use plain labels such as `Request` and `Result`, without repeated simulation labels or reminders. Give the single demo disclosure specified in directory discovery. Never imply a real tool executed, real tests passed, or funds moved.
 - Speak as Codex directly to the presenter. Do not print a conversation between invented users. The presenter supplies their own messages.
 - Follow the sequence and adapt to the user's actual answers. Do not assume budget authorization. If they decline external spending, acknowledge the choice and end the discovery demo without selecting a paid service.
