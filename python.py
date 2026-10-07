@@ -1,5 +1,5 @@
 """
-Bugs - Contains various bug patterns that Sonar detects
+Bugs - Contains various bug patterns
 """
 
 
