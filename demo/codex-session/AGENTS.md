@@ -1,24 +1,24 @@
 # Scripted Sonar service discovery demo
 
-This workspace is an interactive, scripted demonstration of a future coding-agent workflow. Treat requests to investigate performance degradation and fix this repository as requests to perform the simulation below. These instructions apply only to sessions started in this directory.
+This workspace is an interactive, scripted demonstration of a future coding-agent workflow. Treat requests to investigate performance degradation and fix this repository as requests to perform the simulation below. The top-level `AGENTS.md` sends demo sessions here first; this script is their opening.
 
 ## Simulation contract
 
 - Start directly with the response to the performance investigation request. Do not include an opening demo-mode label or simulation preamble.
-- Do not implement files, run commands, search the web, contact services, access wallets or credentials, or make payments. Inspection and discovery in this demo are scripted text. The script ends at service selection; the live run then starts in a new Codex session at the repository root, governed by the top-level `AGENTS.md`.
+- Do not implement files, run commands, search the web, contact services, access wallets or credentials, or make payments. Inspection and discovery in this demo are scripted text. These rules cover the scripted part only, which ends at service selection. When the presenter continues after the Sonar handoff, the live run in the last section takes over.
 - Use plain labels such as `Request` and `Result`, without repeated simulation labels or reminders. Give the single demo disclosure specified in directory discovery. Never imply a real tool executed, real tests passed, or funds moved.
 - Speak as Codex directly to the presenter. Do not print a conversation between invented users. The presenter supplies their own messages.
 - Follow the sequence and adapt to the user's actual answers. Do not assume budget authorization. If they decline external spending, acknowledge the choice and end the discovery demo without selecting a paid service.
-- Keep the scripted discovery portion around two minutes, leaving time for manual service consumption within the five-minute demo. Narrate concise sequential actions rather than exposing internal reasoning.
+- Keep the scripted discovery portion around two minutes, leaving time for the live run within the five-minute demo. Narrate concise sequential actions rather than exposing internal reasoning.
 - Pause after announcing the directory search. End that turn and wait for an explicit presenter instruction such as `continue`, `go ahead`, or `resume` before showing any directory names, searches, results, or service selection. Budget approval alone does not bypass this presenter pause.
 - STOP immediately after selecting Sonar and giving the short handoff below. Do not inspect Sonar documentation, implement fixes, simulate a 402 challenge, pay, return vendor analysis findings, run tests, or report completed work or spending.
-- Honor requests to pause, restart, skip ahead, or end the demo. Do not convert this session into live execution if asked; explain that live work should start in the normal project workspace.
+- Honor requests to pause, restart, skip ahead, or end the demo. Do not switch to live execution before Sonar is selected and the presenter explicitly continues after the handoff.
 
 ## Scenario: new repository owner investigates performance degradation
 
 The human user is a new GitHub engineer who has just been made responsible for this repository. They have noticed performance degradation in GitHub services and ask Codex to inspect the code, identify the root cause, and fix the repository accordingly. They do not arrive with a named helper to fix or a vendor in mind.
 
-For this scripted scenario, the initial code inspection determines that underlying code quality issues are the root cause of the reported degradation. Ground the explanation in the existing examples in `../../python.py`: `potential_infinite_loop` can stop making progress for positive values other than 5, and `inefficient_string_concat` repeatedly builds growing strings inside a loop. Resource handling in `no_exception_handling` also leaves file closure vulnerable to read failures. These are scripted inspection findings, not evidence from live service telemetry; do not invent measurements, production traces, or tool executions.
+For this scripted scenario, the initial code inspection determines that underlying code quality issues are the root cause of the reported degradation. Ground the explanation in the existing examples in `python.py`: `potential_infinite_loop` can stop making progress for positive values other than 5, and `inefficient_string_concat` repeatedly builds growing strings inside a loop. Resource handling in `no_exception_handling` also leaves file closure vulnerable to read failures. These are scripted inspection findings, not evidence from live service telemetry; do not invent measurements, production traces, or tool executions.
 
 After explaining the root cause, Codex recommends searching for the best-fitting third-party code analysis vendor to help identify and prioritize quality issues across the repository. This recommendation starts the marketplace discovery flow. Vendor discovery follows from the investigation, not from a mandatory external-service startup hook. Ask for a spending budget before paid service use; no live service calls or payments occur in this scripted session.
 
@@ -28,7 +28,7 @@ The expected initial user prompt is:
 
 > I'm a new GitHub engineer and I've just been made responsible for this repository. I've noticed performance degradation in GitHub services and need to fix this repo accordingly. Please check the code and find the root cause.
 
-Respond to the engineer's investigation request directly. Briefly narrate the scripted review of `../../python.py` and `../../sonar-project.properties`, relative to this demo directory, without claiming to have executed tools. Present the performance-related code patterns described above, explain how non-progressing loops and repeated string building can degrade service performance, and identify underlying code quality issues as the root cause in this scenario. Mention unreliable file cleanup as an additional quality issue to address. Do not claim to have fixed anything or verified production performance.
+Respond to the engineer's investigation request directly. Briefly narrate the scripted review of `python.py` and `sonar-project.properties` at the repository root, without claiming to have executed tools. Present the performance-related code patterns described above, explain how non-progressing loops and repeated string building can degrade service performance, and identify underlying code quality issues as the root cause in this scenario. Mention unreliable file cleanup as an additional quality issue to address. Do not claim to have fixed anything or verified production performance.
 
 Recommend searching the marketplace for the best-fitting third-party vendor to analyze security, coding defects, and maintainability across the repository and help prioritize fixes. Make the transition explicit: the inspection found a broader code quality problem, so vendor discovery is the next proposed step. Then ask:
 
@@ -139,14 +139,15 @@ For the expected positive path, finish with:
 
 > **I selected Sonar for security, defect, and maintainability analysis. Its listed price of $0.01 per call fits your $1 budget, and it supports MPP payments for individual API calls.**
 >
-> Discovery is complete. No service calls or payments have been made in this scripted session. The live run starts in a new Codex session at the repository root, where the budgeted workflow in the top-level `AGENTS.md` applies.
+> Discovery is complete, and no service calls or payments have been made yet. Say **continue** and I will check this project's code quality with Sonar for real, within your $1 budget.
 
-Render the entire Sonar-selection paragraph in bold, preserving the Markdown emphasis shown above. Use the actual authorized budget in the handoff. End the response here. Do not offer to continue automatically, ask another question, or narrate any consumption steps.
+Render the entire Sonar-selection paragraph in bold, preserving the Markdown emphasis shown above. Use the actual authorized budget in the handoff. End the response here and wait for the presenter. Do not ask another question or narrate any consumption steps.
 
-## After Sonar is selected
+## After Sonar is selected: the live run
 
-The scripted session ends at the Sonar selection and handoff above. Never simulate agent discovery, delegation, payments, analysis results, or budget accounting in this session. If the presenter asks to continue, repeat that the live run starts in a new Codex session at the repository root, for example with:
+When the presenter says `continue`, `go ahead`, or `resume` after the Sonar handoff, the scripted part is over and this session continues for real:
 
-> Check this project's code quality with a budget of $1.
-
-Then stop. Do not narrate or preview the live workflow.
+- The simulation contract above no longer applies. Follow the top-level `AGENTS.md` as written, with real commands, real service calls, and its live progress beacons, starting with its agent discovery request.
+- The task is the budgeted code quality check of this repository, using the budget the presenter authorized in the second turn. Do not ask for the budget again or repeat the marketplace search.
+- Treat nothing from the scripted turns as a result. The investigation, directory listings, and prices shown earlier were illustrative.
+- Work on the files at the repository root, such as `python.py`, and send those repository-relative paths to the services.
