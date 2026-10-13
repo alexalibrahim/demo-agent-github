@@ -45,8 +45,8 @@ def no_exception_handling(filename):
 def bare_except():
     """Using bare except clause"""
     try:
-        result = 10 / 0
-    except:
+        10 / 0
+    except ZeroDivisionError:
         pass
 
 
@@ -131,10 +131,8 @@ def return_in_finally():
     """Return in finally block"""
     try:
         return "try"
-    except:
+    except Exception:
         return "except"
-    finally:
-        return "finally"
 
 
 # Boolean parameter
@@ -178,6 +176,5 @@ def dangerous_operation():
 def assignment_in_conditional():
     """Assignment in conditional"""
     x = 10
-    if y := x + 5:
-        return y
-    return x
+    y = x + 5
+    return y
