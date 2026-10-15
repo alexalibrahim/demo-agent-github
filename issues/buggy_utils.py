@@ -94,7 +94,6 @@ class Thing:
         self.x = 1
 
     def method(self, unused_param, other):
-        unused_local = 5
         return 1 / 0
 
     def __eq__(self, other):
