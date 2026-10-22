@@ -3,6 +3,7 @@ import pickle
 import subprocess
 import hashlib
 import random
+import secrets
 import sqlite3
 import yaml
 import sys, re, json
@@ -30,24 +31,20 @@ def get_user(conn, name):
 
 
 def hash_password(pw):
-    return hashlib.md5(pw.encode()).hexdigest()
+    return hashlib.sha256(pw.encode()).hexdigest()
 
 
 def token():
-    return random.randint(0, 999999)
+    return secrets.randbelow(1000000)
 
 
 def parse_config(text):
-    return yaml.load(text)
+    return yaml.load(text, Loader=yaml.SafeLoader)
 
 
 def process(items=[], cache={}):
     for i in range(len(items)):
-        if items[i] == None:
-            pass
-        elif items[i] == items[i]:
-            cache[i] = items[i]
-        else:
+        if items[i] is not None:
             cache[i] = items[i]
     return cache
 
@@ -55,8 +52,8 @@ def process(items=[], cache={}):
 def divide(a, b):
     try:
         return a / b
-    except:
-        pass
+    except Exception:
+        return None
 
 
 def compute(x):
