@@ -3,6 +3,7 @@ import pickle
 import subprocess
 import hashlib
 import random
+import secrets
 import sqlite3
 import yaml
 import sys, re, json
@@ -30,24 +31,20 @@ def get_user(conn, name):
 
 
 def hash_password(pw):
-    return hashlib.md5(pw.encode()).hexdigest()
+    return hashlib.sha256(pw.encode()).hexdigest()
 
 
 def token():
-    return random.randint(0, 999999)
+    return secrets.randbelow(1000000)
 
 
 def parse_config(text):
-    return yaml.load(text)
+    return yaml.load(text, Loader=yaml.SafeLoader)
 
 
 def process(items=[], cache={}):
     for i in range(len(items)):
-        if items[i] == None:
-            pass
-        elif items[i] == items[i]:
-            cache[i] = items[i]
-        else:
+        if items[i] is not None:
             cache[i] = items[i]
     return cache
 
@@ -55,8 +52,8 @@ def process(items=[], cache={}):
 def divide(a, b):
     try:
         return a / b
-    except:
-        pass
+    except Exception:
+        return None
 
 
 def compute(x):
@@ -93,21 +90,23 @@ class Thing:
     def __init__(self):
         self.x = 1
 
-    def method(self, unused_param, other):
-        unused_local = 5
+    def method(self):
         return 1 / 0
 
     def __eq__(self, other):
         return True
 
 
-def long_function(a, b, c, d, e, f, g, h, i, j):
-    return a if a else b if b else c if c else d if d else e
+def long_function(a, b, c, d, e):
+    if a:
+        return a
+    if b:
+        return b
+    if c:
+        return c
+    return d if d else e
 
 
 def check(x):
-    assert (x, "x must be set")
-    if x == True:
-        return 1
+    assert x, "x must be set"
     return 1
-    print("unreachable")
