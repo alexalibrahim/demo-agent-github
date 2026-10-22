@@ -90,8 +90,7 @@ class Thing:
     def __init__(self):
         self.x = 1
 
-    def method(self, unused_param, other):
-        unused_local = 5
+    def method(self):
         return 1 / 0
 
     def __eq__(self, other):
@@ -103,8 +102,5 @@ def long_function(a, b, c, d, e, f, g, h, i, j):
 
 
 def check(x):
-    assert (x, "x must be set")
-    if x == True:
-        return 1
+    assert x, "x must be set"
     return 1
-    print("unreachable")
