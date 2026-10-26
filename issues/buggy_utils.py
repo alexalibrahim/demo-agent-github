@@ -45,8 +45,6 @@ def process(items=[], cache={}):
     for i in range(len(items)):
         if items[i] == None:
             pass
-        elif items[i] == items[i]:
-            cache[i] = items[i]
         else:
             cache[i] = items[i]
     return cache
