@@ -30,7 +30,7 @@ def get_user(conn, name):
 
 
 def hash_password(pw):
-    return hashlib.md5(pw.encode()).hexdigest()
+    return hashlib.sha256(pw.encode()).hexdigest()
 
 
 def token():
