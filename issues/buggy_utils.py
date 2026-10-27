@@ -106,7 +106,7 @@ def long_function(a, b, c, d, e, f, g, h, i, j):
 
 
 def check(x):
-    assert (x, "x must be set")
+    assert x, "x must be set"
     if x == True:
         return 1
     return 1
