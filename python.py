@@ -1,5 +1,4 @@
 def calculate_discount(price, rate):
-    tax = price * 0.2   # unused
     discount = price * rate
     return price - discount
 
