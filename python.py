@@ -5,5 +5,5 @@ def calculate_discount(price, rate):
 
 
 # UNBLOCKED: python:S1763 — all branches of ternary are identical (agent CAN fix)
-def redundant_ternary(x):
+def redundant_ternary():
     return True
