@@ -7,7 +7,7 @@ import sqlite3
 import yaml
 import sys, re, json
 
-PASSWORD = "admin123"
+PASSWORD = os.environ.get("APP_PASSWORD")
 API_KEY = "AKIAIOSFODNN7EXAMPLE"
 
 
