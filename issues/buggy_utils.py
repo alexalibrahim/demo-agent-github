@@ -101,7 +101,7 @@ class Thing:
         return True
 
 
-def long_function(a, b, c, d, e, f, g, h, i, j):
+def long_function(a, b, c, d, e):
     return a if a else b if b else c if c else d if d else e
 
 
