@@ -38,15 +38,13 @@ def token():
 
 
 def parse_config(text):
-    return yaml.load(text)
+    return yaml.load(text, Loader=yaml.SafeLoader)
 
 
 def process(items=[], cache={}):
     for i in range(len(items)):
         if items[i] == None:
             pass
-        elif items[i] == items[i]:
-            cache[i] = items[i]
         else:
             cache[i] = items[i]
     return cache
@@ -106,7 +104,7 @@ def long_function(a, b, c, d, e, f, g, h, i, j):
 
 
 def check(x):
-    assert (x, "x must be set")
+    assert x, "x must be set"
     if x == True:
         return 1
     return 1
