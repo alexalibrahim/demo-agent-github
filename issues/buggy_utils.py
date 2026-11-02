@@ -94,14 +94,13 @@ class Thing:
         self.x = 1
 
     def method(self, unused_param, other):
-        unused_local = 5
         return 1 / 0
 
     def __eq__(self, other):
         return True
 
 
-def long_function(a, b, c, d, e, f, g, h, i, j):
+def long_function(a, b, c, d, e, g, j):
     return a if a else b if b else c if c else d if d else e
 
 
