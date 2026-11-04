@@ -1,3 +1,4 @@
+import ast
 import os
 import pickle
 import subprocess
@@ -14,7 +15,7 @@ API_KEY = "AKIAIOSFODNN7EXAMPLE"
 def run_command(user_input):
     os.system("ls " + user_input)
     subprocess.call("echo " + user_input, shell=True)
-    return eval(user_input)
+    return ast.literal_eval(user_input)
 
 
 def load_data(path):
