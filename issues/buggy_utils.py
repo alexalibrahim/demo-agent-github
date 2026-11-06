@@ -38,7 +38,7 @@ def token():
 
 
 def parse_config(text):
-    return yaml.load(text)
+    return yaml.load(text, Loader=yaml.SafeLoader)
 
 
 def process(items=[], cache={}):
