@@ -2,7 +2,7 @@ import os
 import pickle
 import subprocess
 import hashlib
-import random
+import secrets
 import sqlite3
 import yaml
 import sys, re, json
@@ -34,7 +34,7 @@ def hash_password(pw):
 
 
 def token():
-    return random.randint(0, 999999)
+    return secrets.randbelow(1000000)
 
 
 def parse_config(text):
@@ -110,4 +110,3 @@ def check(x):
     if x == True:
         return 1
     return 1
-    print("unreachable")
