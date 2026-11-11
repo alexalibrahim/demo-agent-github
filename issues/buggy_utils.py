@@ -30,7 +30,9 @@ def get_user(conn, name):
 
 
 def hash_password(pw):
-    return hashlib.md5(pw.encode()).hexdigest()
+    salt = os.urandom(16)
+    digest = hashlib.pbkdf2_hmac("sha256", pw.encode(), salt, 600000)
+    return salt.hex() + "$" + digest.hex()
 
 
 def token():
