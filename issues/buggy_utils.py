@@ -110,4 +110,3 @@ def check(x):
     if x == True:
         return 1
     return 1
-    print("unreachable")
