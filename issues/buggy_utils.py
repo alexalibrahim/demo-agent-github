@@ -30,7 +30,7 @@ def get_user(conn, name):
 
 
 def hash_password(pw):
-    return hashlib.md5(pw.encode()).hexdigest()
+    return hashlib.sha256(pw.encode()).hexdigest()
 
 
 def token():
@@ -55,7 +55,7 @@ def process(items=[], cache={}):
 def divide(a, b):
     try:
         return a / b
-    except:
+    except (TypeError, ZeroDivisionError):
         pass
 
 
@@ -106,8 +106,7 @@ def long_function(a, b, c, d, e, f, g, h, i, j):
 
 
 def check(x):
-    assert (x, "x must be set")
+    assert x, "x must be set"
     if x == True:
         return 1
-    return 1
-    print("unreachable")
+    return 0
